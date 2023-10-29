@@ -8,6 +8,12 @@ import transformers
 from datasets import load_dataset, disable_caching
 disable_caching()
 
+"""
+Unused imports:
+import torch.nn as nn
+import bitsandbytes as bnb
+"""
+
 from peft import (
     LoraConfig,
     get_peft_model,
@@ -15,8 +21,8 @@ from peft import (
     prepare_model_for_int8_training,
     set_peft_model_state_dict,
 )
-from transformers import AutoModelForCausalLM, AutoModelForSeq2SeqLM
-from transformers import AutoTokenizer, LlamaTokenizer, QWenTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, LlamaTokenizer, AutoModelForSeq2SeqLM
+#, QWenTokenizer
 
 from utils.prompter import Prompter
 
@@ -30,14 +36,13 @@ def train(
     batch_size: int = 128,
     micro_batch_size: int = 4,
     num_epochs: int = 10,
-    learning_rate: float = 1e-4,
+    learning_rate: float = 3e-4,
     cutoff_len: int = 256,
-    val_set_size: int = 1000,
+    val_set_size: int = 2000,
     # lora hyperparams
     lora_r: int = 8,
     lora_alpha: int = 16,
     lora_dropout: float = 0.05,
-    # need to edit this based on the foundation LLM used.
     lora_target_modules: List[str] = [
         "q_proj",
         "k_proj",
@@ -107,8 +112,8 @@ def train(
     if len(wandb_log_model) > 0:
         os.environ["WANDB_LOG_MODEL"] = wandb_log_model
 
-    # should have a better way to determine if the LLM is decoder-only or encoder-decoder
-    if "glm" in base_model.lower() or "t5" in base_model.lower():
+
+    if "glm" in base_model or "t5" in base_model:
         model = AutoModelForSeq2SeqLM.from_pretrained(
             base_model,
             load_in_8bit=True,
@@ -123,11 +128,9 @@ def train(
             device_map=device_map,
             trust_remote_code=True
         )
-
     try:
         tokenizer = AutoTokenizer.from_pretrained(base_model, trust_remote_code=True)
     except:
-        # needed becuase LLaMA changed name from LLaMATokenizer to LlamaTokenzer
         if "llama" in base_model.lower():
             tokenizer = LlamaTokenizer.from_pretrained(base_model, trust_remote_code=True)
         elif "qwen" in base_model.lower():
@@ -137,7 +140,6 @@ def train(
 
     if "qwen" in base_model.lower():
         stokenizer.pad_token_id = 0
-
     tokenizer.pad_token_id = (
         0  # unk. we want this to be different from the eos token
     )
@@ -296,8 +298,9 @@ def train(
 
     model.save_pretrained(output_dir)
 
-    if int(os.environ.get("LOCAL_RANK", 0)) == 0:
-        print("\n If there's a warning about missing keys above, please disregard :)", flush=True)
+    print(
+        "\n If there's a warning about missing keys above, please disregard :)"
+    )
 
 
 if __name__ == "__main__":
