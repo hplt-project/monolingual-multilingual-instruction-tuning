@@ -1,0 +1,11 @@
+accelerate
+appdirs
+loralib
+bitsandbytes
+black
+black[jupyter]
+datasets
+fire
+peft==0.3.0.dev0
+transformers>=4.28.0
+sentencepiece
