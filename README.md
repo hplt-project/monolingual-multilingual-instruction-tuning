@@ -3,17 +3,17 @@
 ## Overview
 This repository contains the code and data used in our work [Monolingual or multilingual instruction tuning: Which makes a better Alpaca](https://arxiv.org/abs/2309.08958) accepted to Findings of ACL: EACL 2024.
 
+## Trained Models/Modules
+We are working on releasing the trained models (full-parameter) and modules (LoRA) at [HPLT's Hugging Face page](https://huggingface.co/collections/HPLT/instruction-tuning-65dba9834e23db813d863951). Please stay tuned. We are currently assessing compatibility with base models' licenses and terms and conditions.
+
 ## Training
-`\loraft` contains the code for low-rank adaptation (LoRA) fine-tuning. The code is derived from [tloen/alpaca-lora](https://github.com/tloen/alpaca-lora). `\fpft` contains the code for full-parameter fine-tuning. It is based on [tatsu-lab/stanford_alpaca](https://github.com/tatsu-lab/stanford_alpaca).
+[`loraft`](https://github.com/hplt-project/monolingual-multilingual-instruction-tuning/tree/main/loraft) contains the code for low-rank adaptation (LoRA) fine-tuning. The code is derived from [tloen/alpaca-lora](https://github.com/tloen/alpaca-lora). Similarly, [`fpft`](https://github.com/hplt-project/monolingual-multilingual-instruction-tuning/tree/main/fpft) contains the code for full-parameter fine-tuning. It is based on [tatsu-lab/stanford_alpaca](https://github.com/tatsu-lab/stanford_alpaca). Please check the respective folders for instructions on how to use the code for training and inference.
 
 ## Training Data
 `training-data/` contains the data we used for monolingual and multilingual instruction tuning. We used the [cleaned version](https://github.com/gururise/AlpacaDataCleaned) of the original [Alpaca data](https://github.com/tatsu-lab/stanford_alpaca) in English (en) as a seed, and we used [open-source models](https://github.com/browsermt) to *machine-translate* it into 8 languages: Bulgarian (bg), Czech (cs), German (de), Spanish (es), Finnish (fi), French (fr), Russian (ru), and Chinese (zh). Note that we also make public a Portuguese (pt) version, but it was not used in our paper.
 
 ## Test Data
 `test-data/` contains the test data we used to evaluate the performance of our models. We sampled English test data from [Open-Assistant](https://github.com/LAION-AI/Open-Assistant) and human-translated it into 10 languages: Bulgarian (bg), Bengali (bn), Czech (cs), Spanish (es), Finnish (fi), French (fr), Hindi (hi), Norwegian (no), Russian (ru), and Chinese (zh). Two languages, Bengali (bn) and Czech (cs), were not used in our paper.
-
-## Trained Models/Modules
-If you are interested in obtaining these, please contact us via the email provided in our paper. We are currently assessing compatibility with base models' licenses and terms and conditions before releasing trained weights.
 
 ## Citation
 Please consider citing us if you use our materials.
