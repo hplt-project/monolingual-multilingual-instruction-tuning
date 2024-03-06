@@ -1,7 +1,11 @@
 ## Low-Rank Adaptation
 
 ### Preparation
-You might need to install the packages in the `requirements.txt` file. It is suggested that you use an environment manager, e.g. `conda`.
+You might need to install the packages in the `requirements.txt` file. It is suggested that you use an environment manager, e.g. Conda.
+
+`pip install -r requirements.txt`
+
+Model weights are/will be available on Hugging Face [here](https://huggingface.co/collections/HPLT/instruction-tuning-65dba9834e23db813d863951).
 
 ### Training
 
@@ -37,13 +41,13 @@ WORLD_SIZE=4 torchrun --nproc_per_node=4 --master_port 12344 finetune.py \
 
 ### Inference
 
-We provide an example script to perform inference below.
+We provide an example script to perform inference below. You need to provide a test file and LoRA weights--you can download it from our Hugging Face [repository](https://huggingface.co/collections/HPLT/instruction-tuning-65dba9834e23db813d863951) or train your own.
 ```
 export CUDA_VISIBLE_DEVICES=$1
 
 TEST_FILE=test_en.jsonl # the path to the test file. Check out our `test-data` folder.
 
-LORA= # this should be the output directory where you saved LoRA checkpoints from training.
+LORA= # this should be the directory containing the LoRA checkpoints/weights.
 
 python generate.py \
     --lora_weights ${LORA} \
