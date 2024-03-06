@@ -9,17 +9,18 @@ Model weights are/will be available on Hugging Face [here](https://huggingface.c
 
 ### Training
 
-We provide an example script to train BLOOM-7B1 below. It is worth noting that you might need to change `WORLD_SIZE` depending on your GPU configuration as well as the `--lora_target_modules` option depending on where you would like to apply LoRA. The name also varies by the base model you use.
+We provide an example script to train BLOOM-7B1 below. It is worth noting that you might need to change `WORLD_SIZE` depending on your GPU configuration as well as the `--lora_target_modules` option depending on where you would like to apply LoRA. The name also varies by the base model you use. The training data should be fed via `--data_path`. You can prepare your own training set, download from this repository, or directly load via Hugging Face dataset: `pinzhenchen/alpaca-cleaned-${LANG}`, where `${LANG}` should be a two digit language code--see [here](https://huggingface.co/collections/HPLT/instruction-tuning-65dba9834e23db813d863951)
 
 ```
 
 export CUDA_VISIBLE_DEVICES= # the GPUs you wish to use
 
 LANG= # the language to train. Please check our `training-data` folder for available languages.
+# You can also directly provide a training set to --data_path instead of specifying a language.
 BASE_MODEL=bigscience/bloom-7b1 # the base model, as per hugging face naming style
 
-OUTPUT=lora-bloom-7b1 # you can change this
-OUTPUT_DIR=# directory to save checkpoints
+OUTPUT_DIR=# directory to save LoRA checkpoints
+mkdir -p ${OUTPUT_DIR}
 
 WORLD_SIZE=4 torchrun --nproc_per_node=4 --master_port 12344 finetune.py \
     --base_model ${BASE_MODEL} \
@@ -41,7 +42,7 @@ WORLD_SIZE=4 torchrun --nproc_per_node=4 --master_port 12344 finetune.py \
 
 ### Inference
 
-We provide an example script to perform inference below. You need to provide a test file and LoRA weights--you can download it from our Hugging Face [repository](https://huggingface.co/collections/HPLT/instruction-tuning-65dba9834e23db813d863951) or train your own.
+We provide an example script to perform inference. You need to provide a test file and LoRA weights--you can download it from our Hugging Face [repository](https://huggingface.co/collections/HPLT/instruction-tuning-65dba9834e23db813d863951) or train your own. Note that the inference code does not do batching so it's not efficient.
 ```
 export CUDA_VISIBLE_DEVICES=$1
 
