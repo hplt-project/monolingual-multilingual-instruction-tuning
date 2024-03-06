@@ -9,7 +9,7 @@ Model weights are/will be available on Hugging Face [here](https://huggingface.c
 
 ### Training
 
-We provide an example script to train BLOOM-7B1 below. It is worth noting that you might need to change `WORLD_SIZE` depending on your GPU configuration as well as the `--lora_target_modules` option depending on where you would like to apply LoRA. The name also varies by the base model you use. The training data should be fed via `--data_path`. You can prepare your own training set, download from this repository, or directly load via Hugging Face dataset: `pinzhenchen/alpaca-cleaned-${LANG}`, where `${LANG}` should be a two digit language code--see [here](https://huggingface.co/collections/HPLT/instruction-tuning-65dba9834e23db813d863951)
+We provide an example script to train BLOOM-7B1 below. It is worth noting that you might need to change `WORLD_SIZE` depending on your GPU configuration as well as the `--lora_target_modules` option depending on where you would like to apply LoRA. The name also varies by the base model you use. The training data should be fed via `--data_path`. You can prepare your own training set, download from this repository, or directly load via Hugging Face dataset: `pinzhenchen/alpaca-cleaned-${LANG}`, where `${LANG}` should be a two digit language code--check [here]([https://huggingface.co/collections/HPLT/instruction-tuning-65dba9834e23db813d863951](https://huggingface.co/collections/pinzhenchen/translated-multilingual-alpaca-instruction-dataset-65e858011ebb209c6d3bb863)) for options.
 
 ```
 
