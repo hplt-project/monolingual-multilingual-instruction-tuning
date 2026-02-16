@@ -3,9 +3,6 @@
 ## Overview
 This repository contains the code and data used in our work [Monolingual or multilingual instruction tuning: Which makes a better Alpaca](https://arxiv.org/abs/2309.08958) accepted to Findings of ACL: EACL 2024.
 
-## Trained Models/Modules
-We are working on releasing the trained models (full-parameter) and modules (LoRA) at [HPLT's Hugging Face page](https://huggingface.co/collections/HPLT/instruction-tuning-65dba9834e23db813d863951). Please stay tuned. We are currently assessing compatibility with base models' licenses and terms and conditions.
-
 ## Training
 [`loraft`](https://github.com/hplt-project/monolingual-multilingual-instruction-tuning/tree/main/loraft) contains the code for low-rank adaptation (LoRA) fine-tuning. The code is derived from [tloen/alpaca-lora](https://github.com/tloen/alpaca-lora). Similarly, [`fpft`](https://github.com/hplt-project/monolingual-multilingual-instruction-tuning/tree/main/fpft) contains the code for full-parameter fine-tuning. It is based on [tatsu-lab/stanford_alpaca](https://github.com/tatsu-lab/stanford_alpaca). Please check the respective folders for instructions on how to use the code for training and inference.
 
